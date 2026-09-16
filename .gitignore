@@ -1,0 +1,99 @@
+# ---------------------------------------------------------------------------
+# Build output
+# ---------------------------------------------------------------------------
+# `make` writes every executable into Lab-*/bin/, so the whole folder is ignored.
+bin/
+build/
+out/
+
+# Object / intermediate files
+*.o
+*.obj
+*.lo
+*.slo
+*.d
+*.gch
+*.pch
+
+# Libraries
+*.a
+*.la
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.elf
+
+# Java
+*.class
+*.jar
+*.war
+
+# ---------------------------------------------------------------------------
+# Executables built in-place (no file extension, so they need explicit rules)
+# Prefer `make` -> Lab-*/bin/ for new examples; these are the legacy ones.
+# ---------------------------------------------------------------------------
+Lab-1/Example1/ex1
+Lab-1/Example2/MultithreadingExample
+Lab-1/Example2-Part-BandC/MultithreadingExampleWorkers
+Lab-1/Example3/Deadlock
+Lab-1/Example3/DeadlockFixed
+Lab-1/Example4/RaceCondition
+Lab-1/Example5/ProducerConsumer
+Lab-1/Example6/Factorial
+Lab-1/Example7/matrix_mult
+Lab-1/Example7/matmul_mp
+Lab-1/Example8/Barrier
+Lab-1/Example9/map_reduce
+Lab-1/Example10/sequential_IO
+Lab-1/Example10/thread_pool_IO
+Lab-1/Example10/process_pool_IO
+
+# ---------------------------------------------------------------------------
+# Runtime artifacts produced by the examples
+# ---------------------------------------------------------------------------
+fetced_data
+fetched_data
+*.log
+core
+core.*
+vgcore.*
+perf.data
+perf.data.old
+callgrind.out.*
+massif.out.*
+
+# ---------------------------------------------------------------------------
+# Python (plotting / analysis scripts)
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Editors & OS
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------------------
+# Local notes that should not be published
+# ---------------------------------------------------------------------------
+scratch/
+NOTES.local.md
