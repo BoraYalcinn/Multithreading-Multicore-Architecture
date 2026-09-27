@@ -57,6 +57,14 @@ Lab-1/Example10/sequential_IO
 Lab-1/Example10/thread_pool_IO
 Lab-1/Example10/process_pool_IO
 
+# Lab-2 C++ executables (built directly in Lab-2/cpp/, no extension)
+Lab-2/cpp/nn_sequential
+Lab-2/cpp/nn_multithreaded
+Lab-2/cpp/nn_D
+Lab-2/cpp/nn_F
+Lab-2/cpp/nn_G
+Lab-2/cpp/nn_tsan
+
 # ---------------------------------------------------------------------------
 # Runtime artifacts produced by the examples
 # ---------------------------------------------------------------------------
@@ -70,6 +78,13 @@ perf.data
 perf.data.old
 callgrind.out.*
 massif.out.*
+
+# ---------------------------------------------------------------------------
+# Datasets (MNIST raw idx files, ~53 MB) -- fetch with Lab-2/data/download_mnist.py
+# ---------------------------------------------------------------------------
+*-idx3-ubyte
+*-idx1-ubyte
+*-ubyte.gz
 
 # ---------------------------------------------------------------------------
 # Python (plotting / analysis scripts)
