@@ -176,22 +176,12 @@ struct NN {
     }
 
     
-    // ---- Part G2: thread-local accumulators, allocated ONCE ------------
-    // Same design as Part G, but the P accumulator arrays are allocated a
-    // single time before the batch loop, then zeroed (not reallocated)
-    // before every mini-batch. This isolates allocation cost from the
-    // thread-local + reduction design itself.
+    // ---- Part G: thread-local accumulators + reduction ------------------
+    // Each worker p writes ONLY to its own private slot (local_*[p]).
+    // No two threads ever touch the same memory during the expensive
+    // forward/backward computation, so no mutex is needed. Combination
+    // happens in a single-threaded reduction step after every worker joins.
     void train_parallel(const Data& d, int epochs, int bs, float lr, int P) {
-        // Allocated ONCE for the whole training run.
-        vector<vector<float>> local_g1(P, vector<float>(W1.size()));
-        vector<vector<float>> local_gb1(P, vector<float>(H));
-        vector<vector<float>> local_g2(P, vector<float>(W2.size()));
-        vector<vector<float>> local_gb2(P, vector<float>(C));
-        vector<float> local_loss(P);
-        vector<int>   local_correct(P);
-
-        vector<float> g1(W1.size()), gb1(H), g2(W2.size()), gb2(C);
-
         for (int e = 0; e < epochs; e++) {
             float L = 0;
             int ok = 0;
@@ -200,15 +190,12 @@ struct NN {
                 int e2 = std::min(s + bs, d.n);
                 int n = e2 - s;
 
-                // Zero out (not reallocate) before every mini-batch.
-                for (int p = 0; p < P; p++) {
-                    std::fill(local_g1[p].begin(), local_g1[p].end(), 0.0f);
-                    std::fill(local_gb1[p].begin(), local_gb1[p].end(), 0.0f);
-                    std::fill(local_g2[p].begin(), local_g2[p].end(), 0.0f);
-                    std::fill(local_gb2[p].begin(), local_gb2[p].end(), 0.0f);
-                    local_loss[p] = 0.0f;
-                    local_correct[p] = 0;
-                }
+                vector<vector<float>> local_g1(P, vector<float>(W1.size(), 0.0f));
+                vector<vector<float>> local_gb1(P, vector<float>(H, 0.0f));
+                vector<vector<float>> local_g2(P, vector<float>(W2.size(), 0.0f));
+                vector<vector<float>> local_gb2(P, vector<float>(C, 0.0f));
+                vector<float> local_loss(P, 0.0f);
+                vector<int>   local_correct(P, 0);
 
                 int base = n / P;
                 int remainder = n % P;
@@ -234,10 +221,9 @@ struct NN {
 
                 for (auto& t : workers) t.join();
 
-                std::fill(g1.begin(), g1.end(), 0.0f);
-                std::fill(gb1.begin(), gb1.end(), 0.0f);
-                std::fill(g2.begin(), g2.end(), 0.0f);
-                std::fill(gb2.begin(), gb2.end(), 0.0f);
+                // ---- Reduction (single-threaded, race-free by construction) ----
+                vector<float> g1(W1.size(), 0.0f), gb1(H, 0.0f);
+                vector<float> g2(W2.size(), 0.0f), gb2(C, 0.0f);
 
                 for (int p = 0; p < P; p++) {
                     for (size_t i = 0; i < g1.size(); i++) g1[i] += local_g1[p][i];
