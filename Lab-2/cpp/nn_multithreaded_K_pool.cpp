@@ -14,9 +14,10 @@
 //   [6] Weight update         end of the batch in NN::train()
 //   [7] Evaluation            NN::accuracy()
 //
-// Build:  g++ -O2 -std=c++17 nn_sequential.cpp -o nn_sequential
-// Run:    ./nn_sequential ../data        (MNIST IDX files)
-//         ./nn_sequential --synthetic    (smoke test, no download needed)
+// Build:  g++ -O2 -std=c++20 nn_multithreaded_K_pool.cpp -o nn_K -pthread
+//         (C++20 required: std::barrier)
+// Run:    ./nn_K ../data        (MNIST IDX files)
+//         ./nn_K --synthetic    (smoke test, no download needed)
 
 #include <algorithm>
 #include <chrono>
@@ -28,9 +29,10 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <barrier>
 #include <thread>
 #include <mutex>
-#include <barrier>
+
 
 using std::vector;
 
