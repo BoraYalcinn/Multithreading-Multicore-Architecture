@@ -30,6 +30,7 @@
 #include <vector>
 #include <thread>
 #include <mutex>
+#include <barrier>
 
 using std::vector;
 
@@ -176,19 +177,49 @@ struct NN {
     }
 
     
-    // ---- Part G2: thread-local accumulators, allocated ONCE ------------
-    // Same design as Part G, but the P accumulator arrays are allocated a
-    // single time before the batch loop, then zeroed (not reallocated)
-    // before every mini-batch. This isolates allocation cost from the
-    // thread-local + reduction design itself.
+        // ---- Part K: persistent worker pool, std::barrier synchronization ---
+    // Workers are created ONCE for the whole training run, not per batch.
+    // Two barriers coordinate each round: one releases workers to start
+    // processing the new batch, the other lets the main thread know every
+    // worker has finished before it performs the reduction + weight update.
     void train_parallel(const Data& d, int epochs, int bs, float lr, int P) {
-        // Allocated ONCE for the whole training run.
         vector<vector<float>> local_g1(P, vector<float>(W1.size()));
         vector<vector<float>> local_gb1(P, vector<float>(H));
         vector<vector<float>> local_g2(P, vector<float>(W2.size()));
         vector<vector<float>> local_gb2(P, vector<float>(C));
         vector<float> local_loss(P);
         vector<int>   local_correct(P);
+
+        vector<int> w_start(P), w_end(P);
+        bool stop = false;
+
+        std::barrier sync_start(P + 1);  // main + P workers
+        std::barrier sync_done(P + 1);
+
+        auto worker_fn = [&](int p) {
+            while (true) {
+                sync_start.arrive_and_wait();   // wait for main to hand out work (or stop)
+                if (stop) return;
+
+                std::fill(local_g1[p].begin(), local_g1[p].end(), 0.0f);
+                std::fill(local_gb1[p].begin(), local_gb1[p].end(), 0.0f);
+                std::fill(local_g2[p].begin(), local_g2[p].end(), 0.0f);
+                std::fill(local_gb2[p].begin(), local_gb2[p].end(), 0.0f);
+                local_loss[p] = 0.0f;
+                local_correct[p] = 0;
+
+                for (int i = w_start[p]; i < w_end[p]; i++) {
+                    sample_grad(&d.x[(size_t)i * d.d], d.y[i],
+                                local_g1[p], local_gb1[p], local_g2[p], local_gb2[p],
+                                local_loss[p], local_correct[p]);
+                }
+
+                sync_done.arrive_and_wait();    // tell main this worker is finished
+            }
+        };
+
+        vector<std::thread> workers;
+        for (int p = 0; p < P; p++) workers.emplace_back(worker_fn, p);
 
         vector<float> g1(W1.size()), gb1(H), g2(W2.size()), gb2(C);
 
@@ -200,39 +231,18 @@ struct NN {
                 int e2 = std::min(s + bs, d.n);
                 int n = e2 - s;
 
-                // Zero out (not reallocate) before every mini-batch.
-                for (int p = 0; p < P; p++) {
-                    std::fill(local_g1[p].begin(), local_g1[p].end(), 0.0f);
-                    std::fill(local_gb1[p].begin(), local_gb1[p].end(), 0.0f);
-                    std::fill(local_g2[p].begin(), local_g2[p].end(), 0.0f);
-                    std::fill(local_gb2[p].begin(), local_gb2[p].end(), 0.0f);
-                    local_loss[p] = 0.0f;
-                    local_correct[p] = 0;
-                }
-
                 int base = n / P;
                 int remainder = n % P;
-
-                vector<std::thread> workers;
                 int start = s;
                 for (int p = 0; p < P; p++) {
                     int count = base + (p < remainder ? 1 : 0);
-                    int end = start + count;
-
-                    workers.emplace_back([this, &d, start, end, p,
-                                           &local_g1, &local_gb1, &local_g2, &local_gb2,
-                                           &local_loss, &local_correct]() {
-                        for (int i = start; i < end; i++) {
-                            sample_grad(&d.x[(size_t)i * d.d], d.y[i],
-                                        local_g1[p], local_gb1[p], local_g2[p], local_gb2[p],
-                                        local_loss[p], local_correct[p]);
-                        }
-                    });
-
-                    start = end;
+                    w_start[p] = start;
+                    w_end[p] = start + count;
+                    start += count;
                 }
 
-                for (auto& t : workers) t.join();
+                sync_start.arrive_and_wait();   // release workers for this batch
+                sync_done.arrive_and_wait();    // wait until every worker is done
 
                 std::fill(g1.begin(), g1.end(), 0.0f);
                 std::fill(gb1.begin(), gb1.end(), 0.0f);
@@ -258,6 +268,11 @@ struct NN {
             std::cout << "Epoch " << e + 1 << " loss=" << L / d.n
                       << " train_acc=" << 100.0 * ok / d.n << "%\n";
         }
+
+        // ---- Shutdown: release workers one final time so they see stop==true ----
+        stop = true;
+        sync_start.arrive_and_wait();
+        for (auto& t : workers) t.join();
     }
 
 
