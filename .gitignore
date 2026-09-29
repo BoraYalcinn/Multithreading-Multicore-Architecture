@@ -64,6 +64,7 @@ Lab-2/cpp/nn_D
 Lab-2/cpp/nn_F
 Lab-2/cpp/nn_G
 Lab-2/cpp/nn_tsan
+Lab-2/cpp/nn_tsan_fixed
 
 # ---------------------------------------------------------------------------
 # Runtime artifacts produced by the examples
@@ -112,3 +113,20 @@ Thumbs.db
 # ---------------------------------------------------------------------------
 scratch/
 NOTES.local.md
+
+# ---------------------------------------------------------------------------
+# docs/: only the finished PDF reports are published.
+# LaTeX sources, logos and build output stay local.
+# ---------------------------------------------------------------------------
+docs/**
+!docs/**/
+!docs/**/*.pdf
+
+# LaTeX build output (anywhere)
+*.aux
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.fls
+*.fdb_latexmk
