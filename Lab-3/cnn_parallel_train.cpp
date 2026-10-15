@@ -265,6 +265,44 @@ double train_epoch(const vector<Sample> & d, Params & p, int batch, double lr) {
     }
     return tot / d.size();
 }
+// One synchronous mini-batch at fixed theta: images [lo, hi) are split among T workers
+// (image ownership). Each worker zeroes its own G[t] and local_loss[t], then runs the reference
+// forward(), loss() and backward_accumulate() (which ADDS into G[t]). After join, the main thread
+// reduces G[0] + G[1] + ... + G[T-1] into g in increasing worker order. theta is NOT modified here.
+// Returns the batch loss sum (local losses added in worker order).
+double batch_gradient_parallel(const vector<Sample> & d, int lo, int hi, const Params & p,
+                               vector<WS> & ws, vector<Grad> & G, vector<double> & local_loss,
+                               Grad & g, int T) {
+    const int B = hi - lo;
+    vector<thread> workers;
+    workers.reserve(T);
+    for (int tid = 0; tid < T;++tid)
+        workers.emplace_back([&, tid] {
+            const int a = lo + int((1LL * tid * B) / T);           // Equation (2)
+            const int b = lo + int((1LL * (tid + 1) * B) / T);
+            G[tid].zero();                                         // gradients zeroed per batch
+            local_loss[tid] = 0;
+            for (int i = a; i < b;++i) {
+                forward(d[i].x, p, ws[tid]);                       // reads theta_tau only
+                local_loss[tid] += loss(ws[tid], d[i].y);
+                backward_accumulate(d[i].x, d[i].y, p, ws[tid], G[tid]);   // ADDS into G[tid]
+            }
+            // no worker calls sgd_update()
+        });
+    for (auto & th : workers)
+        th.join();                                                 // all gradients at theta_tau done
+    g.zero();                                                      // fixed-order serial reduction
+    double L = 0;
+    for (int t = 0; t < T;++t) {
+        for (size_t i = 0; i < g.K.size();++i)  g.K[i]  += G[t].K[i];
+        for (size_t i = 0; i < g.b.size();++i)  g.b[i]  += G[t].b[i];
+        for (size_t i = 0; i < g.Wd.size();++i) g.Wd[i] += G[t].Wd[i];
+        for (size_t i = 0; i < g.c.size();++i)  g.c[i]  += G[t].c[i];
+        L += local_loss[t];
+    }
+    return L;
+}
+
 // Parallel version of train_epoch(). Same batch boundaries, same image order, same update count.
 double train_epoch_parallel(const vector<Sample> & d, Params & p, int batch, double lr, int T) {
     // Allocated once per epoch, BEFORE any worker starts (the reference also allocates
@@ -276,38 +314,12 @@ double train_epoch_parallel(const vector<Sample> & d, Params & p, int batch, dou
     double tot = 0;
     for (int lo = 0; lo <(int) d.size(); lo += batch) {
         const int hi = min((int) d.size(), lo + batch);
-        const int B = hi - lo;                 // actual batch size (last batch may be shorter)
-        // theta (p) is NOT modified until all workers have joined.
-        vector<thread> workers;
-        workers.reserve(T);
-        for (int tid = 0; tid < T;++tid)
-            workers.emplace_back([&, tid] {
-                const int a = lo + int((1LL * tid * B) / T);       // Equation (2)
-                const int b = lo + int((1LL * (tid + 1) * B) / T);
-                G[tid].zero();                                     // gradients zeroed per batch
-                local_loss[tid] = 0;
-                for (int i = a; i < b;++i) {
-                    forward(d[i].x, p, ws[tid]);                   // reads theta_tau only
-                    local_loss[tid] += loss(ws[tid], d[i].y);
-                    backward_accumulate(d[i].x, d[i].y, p, ws[tid], G[tid]);   // ADDS into G[tid]
-                }
-                // no worker calls sgd_update()
-            });
-        for (auto & th : workers)
-            th.join();                                             // all gradients at theta_tau done
-        // Fixed-order serial reduction in increasing worker order.
-        g.zero();
-        for (int t = 0; t < T;++t) {
-            for (size_t i = 0; i < g.K.size();++i)  g.K[i]  += G[t].K[i];
-            for (size_t i = 0; i < g.b.size();++i)  g.b[i]  += G[t].b[i];
-            for (size_t i = 0; i < g.Wd.size();++i) g.Wd[i] += G[t].Wd[i];
-            for (size_t i = 0; i < g.c.size();++i)  g.c[i]  += G[t].c[i];
-            tot += local_loss[t];
-        }
-        sgd_update(p, g, lr, B);               // exactly ONE update, divides by B once
+        tot += batch_gradient_parallel(d, lo, hi, p, ws, G, local_loss, g, T);
+        sgd_update(p, g, lr, hi - lo);         // exactly ONE update, divides by the actual B once
     }
     return tot / d.size();
 }
+
 // Three fixtures: a hand-computed convolution, forward() against a naive direct
 // implementation, and the pooling tie rule (first maximum in row-major order).
 void selftest() {
@@ -445,6 +457,28 @@ void gradcheck() {
         exit(3);
 }
 
+// Parallel forward with IMAGE OWNERSHIP: worker t runs forward() on images
+// [floor(t*M/T), floor((t+1)*M/T)) with its own workspace ws[t] and writes the class-0
+// probability of image i into prob0[i] (one writer per slot). Returns after all workers joined.
+void forward_images_parallel(const vector<Sample> & te, const Params & p, vector<WS> & ws,
+                             vector<double> & prob0, int T) {
+    const int M = (int) te.size();
+    vector<thread> workers;
+    workers.reserve(T);
+    for (int tid = 0; tid < T;++tid)
+        workers.emplace_back([&, tid] {
+            const int lo = int((1LL * tid * M) / T);       // Equation (2)
+            const int hi = int((1LL * (tid + 1) * M) / T);
+            WS & w = ws[tid];                              // private workspace
+            for (int i = lo; i < hi;++i) {
+                forward(te[i].x, p, w);                    // p, te: shared read-only
+                prob0[i] = w.p[0];                         // exactly one writer per slot
+            }
+        });
+    for (auto & th : workers)
+        th.join();                                         // all images done and visible
+}
+
 struct Opt {
     bool st = false, gc = false, syn = false;
     string data = "data/mnist", mode = "train", csv = "";
@@ -542,20 +576,7 @@ int run(int ac, char * * av) {
         auto t = chrono::steady_clock::now();
         double sum = 0;
         for (int rr = 0; rr < o.repeats;++rr) {
-            vector<thread> workers;
-            workers.reserve(T);
-            for (int tid = 0; tid < T;++tid)
-                workers.emplace_back([&, tid] {
-                    const int lo = int((1LL * tid * M) / T);       // Equation (2)
-                    const int hi = int((1LL * (tid + 1) * M) / T);
-                    WS & w = ws[tid];                              // private workspace
-                    for (int i = lo; i < hi;++i) {
-                        forward(te[i].x, p, w);                    // p, te: shared read-only
-                        prob0[i] = w.p[0];                         // exactly one writer per slot
-                    }
-                });
-            for (auto & th : workers)
-                th.join();                                         // all images of this repetition done
+            forward_images_parallel(te, p, ws, prob0, T);          // workers created + joined inside
             for (int i = 0; i < M;++i)                             // same summation order as the reference
                 sum += prob0[i];
         }

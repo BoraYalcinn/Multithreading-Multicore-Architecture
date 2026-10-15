@@ -497,6 +497,44 @@ void gradcheck() {
         exit(3);
 }
 
+// Parallel forward with ROW OWNERSHIP over the whole batch (3 phases, barriers between them).
+//   phase 1: M1 = B*F*26 convolution rows (n,f,r) -> S, A
+//   phase 2: M2 = B*F*13 pooled rows      (n,f,r) -> P, win
+//   phase 3: M3 = B images                 n      -> z, p
+// Every item is assigned with Equation (2). Returns after all workers joined.
+void forward_rows_parallel(const vector<Sample> & te, const Params & p, BatchWS & bw, int T) {
+    const int B = (int) te.size();
+    const long long M1 = 1LL * B * p.F * OH, M2 = 1LL * B * p.F * PH, M3 = B;
+    auto chunk = [T](long long M, int tid, long long & lo, long long & hi) {
+        lo = (tid * M) / T;                                       // Equation (2)
+        hi = ((tid + 1) * M) / T;
+    };
+    Barrier bar(T);
+    vector<thread> workers;
+    workers.reserve(T);
+    for (int tid = 0; tid < T;++tid)
+        workers.emplace_back([&, tid] {
+            long long lo, hi;
+            chunk(M1, tid, lo, hi);                               // phase 1: conv rows
+            for (long long a = lo; a < hi;++a) {
+                int n = int(a / (p.F * OH)), f = int((a / OH) % p.F), r = int(a % OH);
+                conv_row(te[n].x, p, bw, n, f, r);
+            }
+            bar.arrive_and_wait();                                // all of S, A complete
+            chunk(M2, tid, lo, hi);                               // phase 2: pooled rows
+            for (long long a = lo; a < hi;++a) {
+                int n = int(a / (p.F * PH)), f = int((a / PH) % p.F), r = int(a % PH);
+                pool_row(bw, p.F, n, f, r);
+            }
+            bar.arrive_and_wait();                                // all of P, win complete
+            chunk(M3, tid, lo, hi);                               // phase 3: images
+            for (long long n = lo; n < hi;++n)
+                dense_softmax(p, bw, int(n));
+        });
+    for (auto & th : workers)
+        th.join();                                                // all probabilities complete
+}
+
 struct Opt {
     bool st = false, gc = false, syn = false;
     string data = "data/mnist", mode = "train", csv = "";
@@ -585,46 +623,16 @@ int run(int ac, char * * av) {
     else {
         const int T = o.threads;
         const int B = (int) te.size();
-        const long long M1 = 1LL * B * p.F * OH;      // convolution rows
-        const long long M2 = 1LL * B * p.F * PH;      // pooled rows
-        const long long M3 = B;                       // images (dense + softmax)
         BatchWS bw(p.F, B);                           // allocated before any worker starts
         {
             WS w(p.F);                                // untimed warm-up (as in the reference)
             for (int i = 0; i < min(10, B);++i)
                 forward(te[i].x, p, w);
         }
-        auto chunk = [T](long long M, int tid, long long & lo, long long & hi) {
-            lo = (tid * M) / T;                       // Equation (2)
-            hi = ((tid + 1) * M) / T;
-        };
         auto t = chrono::steady_clock::now();
         double sum = 0;
         for (int rr = 0; rr < o.repeats;++rr) {
-            Barrier bar(T);
-            vector<thread> workers;
-            workers.reserve(T);
-            for (int tid = 0; tid < T;++tid)
-                workers.emplace_back([&, tid] {
-                    long long lo, hi;
-                    chunk(M1, tid, lo, hi);                       // phase 1: conv rows
-                    for (long long a = lo; a < hi;++a) {
-                        int n = int(a / (p.F * OH)), f = int((a / OH) % p.F), r = int(a % OH);
-                        conv_row(te[n].x, p, bw, n, f, r);
-                    }
-                    bar.arrive_and_wait();                        // all of S, A complete
-                    chunk(M2, tid, lo, hi);                       // phase 2: pooled rows
-                    for (long long a = lo; a < hi;++a) {
-                        int n = int(a / (p.F * PH)), f = int((a / PH) % p.F), r = int(a % PH);
-                        pool_row(bw, p.F, n, f, r);
-                    }
-                    bar.arrive_and_wait();                        // all of P, win complete
-                    chunk(M3, tid, lo, hi);                       // phase 3: images
-                    for (long long n = lo; n < hi;++n)
-                        dense_softmax(p, bw, int(n));
-                });
-            for (auto & th : workers)
-                th.join();                                        // all probabilities complete
+            forward_rows_parallel(te, p, bw, T);                  // workers created + joined inside
             for (int n = 0; n < B;++n)                            // same summation order as the reference
                 sum += bw.p[(size_t) n * N_CLASSES];
         }

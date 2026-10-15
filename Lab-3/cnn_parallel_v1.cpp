@@ -399,6 +399,28 @@ void gradcheck() {
         exit(3);
 }
 
+// Parallel forward with IMAGE OWNERSHIP: worker t runs forward() on images
+// [floor(t*M/T), floor((t+1)*M/T)) with its own workspace ws[t] and writes the class-0
+// probability of image i into prob0[i] (one writer per slot). Returns after all workers joined.
+void forward_images_parallel(const vector<Sample> & te, const Params & p, vector<WS> & ws,
+                             vector<double> & prob0, int T) {
+    const int M = (int) te.size();
+    vector<thread> workers;
+    workers.reserve(T);
+    for (int tid = 0; tid < T;++tid)
+        workers.emplace_back([&, tid] {
+            const int lo = int((1LL * tid * M) / T);       // Equation (2)
+            const int hi = int((1LL * (tid + 1) * M) / T);
+            WS & w = ws[tid];                              // private workspace
+            for (int i = lo; i < hi;++i) {
+                forward(te[i].x, p, w);                    // p, te: shared read-only
+                prob0[i] = w.p[0];                         // exactly one writer per slot
+            }
+        });
+    for (auto & th : workers)
+        th.join();                                         // all images done and visible
+}
+
 struct Opt {
     bool st = false, gc = false, syn = false;
     string data = "data/mnist", mode = "train", csv = "";
@@ -496,20 +518,7 @@ int run(int ac, char * * av) {
         auto t = chrono::steady_clock::now();
         double sum = 0;
         for (int rr = 0; rr < o.repeats;++rr) {
-            vector<thread> workers;
-            workers.reserve(T);
-            for (int tid = 0; tid < T;++tid)
-                workers.emplace_back([&, tid] {
-                    const int lo = int((1LL * tid * M) / T);       // Equation (2)
-                    const int hi = int((1LL * (tid + 1) * M) / T);
-                    WS & w = ws[tid];                              // private workspace
-                    for (int i = lo; i < hi;++i) {
-                        forward(te[i].x, p, w);                    // p, te: shared read-only
-                        prob0[i] = w.p[0];                         // exactly one writer per slot
-                    }
-                });
-            for (auto & th : workers)
-                th.join();                                         // all images of this repetition done
+            forward_images_parallel(te, p, ws, prob0, T);          // workers created + joined inside
             for (int i = 0; i < M;++i)                             // same summation order as the reference
                 sum += prob0[i];
         }
