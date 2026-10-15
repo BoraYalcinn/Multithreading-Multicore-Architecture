@@ -1,0 +1,1 @@
+language,version,decomposition,dataset,mode,images,batch,repeats,workers_T,run_index,timing_scope,seconds,images_per_s,checksum_or_final_loss,notes
