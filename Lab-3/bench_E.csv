@@ -1,0 +1,321 @@
+language,version,decomposition,dataset,mode,images,batch,repeats,workers_T,run_index,timing_scope,seconds,images_per_s,checksum_or_final_loss,notes
+C++,sequential,none,synthetic,infer,500,500,100,1,1,full,0.915329,54625.1675627015,5000.236344600,reference
+C++,sequential,none,synthetic,infer,500,500,100,1,2,full,0.89683,55751.92622905121,5000.236344600,reference
+C++,sequential,none,synthetic,infer,500,500,100,1,3,full,0.948442,52718.03652727315,5000.236344600,reference
+C++,sequential,none,synthetic,infer,500,500,100,1,4,full,0.923006,54170.82879201219,5000.236344600,reference
+C++,sequential,none,synthetic,infer,500,500,100,1,5,full,0.88053,56783.98237425187,5000.236344600,reference
+C++,sequential,none,synthetic,infer,1,1,30000,1,1,full,0.540965,55456.45282042276,2977.096525501,reference
+C++,sequential,none,synthetic,infer,1,1,30000,1,2,full,0.507131,59156.31266871873,2977.096525501,reference
+C++,sequential,none,synthetic,infer,1,1,30000,1,3,full,0.536362,55932.374030971616,2977.096525501,reference
+C++,sequential,none,synthetic,infer,1,1,30000,1,4,full,0.506623,59215.62976809185,2977.096525501,reference
+C++,sequential,none,synthetic,infer,1,1,30000,1,5,full,0.575521,52126.68173706955,2977.096525501,reference
+C++,sequential,none,MNIST,train,10000,32,1,1,1,epoch_loop,0.42919,23299.70409375801,0.751183,reference
+C++,sequential,none,MNIST,train,10000,32,1,1,2,epoch_loop,0.433741,23055.23342271079,0.751183,reference
+C++,sequential,none,MNIST,train,10000,32,1,1,3,epoch_loop,0.470835,21238.86287128187,0.751183,reference
+C++,sequential,none,MNIST,train,10000,32,1,1,4,epoch_loop,0.407692,24528.320398732376,0.751183,reference
+C++,sequential,none,MNIST,train,10000,32,1,1,5,epoch_loop,0.395319,25296.026753077895,0.751183,reference
+C++,sequential,none,MNIST,train,10000,256,1,1,1,epoch_loop,0.471835,21193.84954486208,2.180807,reference
+C++,sequential,none,MNIST,train,10000,256,1,1,2,epoch_loop,0.420727,23768.381872330512,2.180807,reference
+C++,sequential,none,MNIST,train,10000,256,1,1,3,epoch_loop,0.437347,22865.139122938996,2.180807,reference
+C++,sequential,none,MNIST,train,10000,256,1,1,4,epoch_loop,0.420806,23763.919715973632,2.180807,reference
+C++,sequential,none,MNIST,train,10000,256,1,1,5,epoch_loop,0.427207,23407.856144679277,2.180807,reference
+C++,final,image,synthetic,infer,500,500,100,1,1,full,1.166944836,42846.9268277,5000.2363446,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,full,1.167242875,42835.9864694,5000.2363446,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,full,1.143301601,43732.9922011,5000.2363446,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,full,1.088139669,45949.9836505,5000.2363446,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,full,1.134059453,44089.399253,5000.2363446,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.608481142,82171.8152771,5000.2363446,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.630668303,79280.9782292,5000.2363446,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.643204522,77735.7718887,5000.2363446,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.657544156,76040.5206917,5000.2363446,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.684834877,73010.3002625,5000.2363446,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.410635816,121762.393955,5000.2363446,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.45070614,110937.028726,5000.2363446,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.398409359,125499.059875,5000.2363446,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.39557856,126397.143465,5000.2363446,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.415960922,120203.599318,5000.2363446,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.445862567,112142.179453,5000.2363446,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.450988237,110867.636665,5000.2363446,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.419471898,119197.496277,5000.2363446,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.370101764,135097.978079,5000.2363446,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.61869515,80815.2447938,5000.2363446,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.651086076,76794.7616192,5000.2363446,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.498011238,100399.340788,5000.2363446,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.433989885,115210.05841,5000.2363446,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.381944802,130908.968359,5000.2363446,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.486872721,102696.244508,5000.2363446,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,1,1,full,0.904265474,55293.4966972,5000.2363446,pool setup_s=3.52e-07 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,full,0.940543822,53160.7340673,5000.2363446,pool setup_s=2.7e-08 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,full,0.910077594,54940.3702823,5000.2363446,pool setup_s=1.29e-07 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,full,0.982545003,50888.2543266,5000.2363446,pool setup_s=2.97e-07 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,full,0.881319693,56733.1019574,5000.2363446,pool setup_s=1.59e-07 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.583675081,85664.0991326,5000.2363446,pool setup_s=2.7424e-05 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.704911032,70930.936998,5000.2363446,pool setup_s=2.5258e-05 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.643583452,77690.002508,5000.2363446,pool setup_s=4.1197e-05 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.650257568,76892.6075767,5000.2363446,pool setup_s=4.7803e-05 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,full,0.53523941,93416.1406388,5000.2363446,pool setup_s=3.7907e-05 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.390148158,128156.442558,5000.2363446,pool setup_s=0.000104231 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.455118228,109861.563268,5000.2363446,pool setup_s=5.2569e-05 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.454267102,110067.402592,5000.2363446,pool setup_s=0.0001057 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.424550893,117771.510611,5000.2363446,pool setup_s=6.672e-05 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,full,0.356981921,140063.115409,5000.2363446,pool setup_s=5.1234e-05 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.432487252,115610.344048,5000.2363446,pool setup_s=0.000214558 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.359610608,139039.279954,5000.2363446,pool setup_s=0.000144766 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.419049651,119317.60325,5000.2363446,pool setup_s=0.000157826 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.464061018,107744.45183,5000.2363446,pool setup_s=0.000237189 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,full,0.406901698,122879.801794,5000.2363446,pool setup_s=0.000351009 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.320466328,156022.632119,5000.2363446,pool setup_s=0.000391703 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.312802339,159845.352052,5000.2363446,pool setup_s=0.000306333 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.369450301,135336.20047,5000.2363446,pool setup_s=0.000295956 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.310090306,161243.350832,5000.2363446,pool setup_s=0.000301031 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,full,0.335529223,149018.316655,5000.2363446,pool setup_s=0.000443942 extra_bytes=1650592
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.285458588,38896.624494,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.256784091,39784.0809396,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.255724845,39817.6401455,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.210282814,41312.6580181,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.30026568,38453.6797126,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.720697735,69377.2126258,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.745895572,67033.5122998,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.793694599,62996.5229233,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.711058632,70317.6893576,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.715608095,69870.646167,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.471919527,105950.267237,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.478010156,104600.288032,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.45213335,110586.843461,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.460917701,108479.235863,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.451021533,110859.452025,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.480055177,104154.693868,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.489308602,102185.001031,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.46374646,107817.534607,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.499576869,100084.697877,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.486302668,102816.626949,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.651489934,76747.1566184,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.543060269,92070.8121256,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.575799973,86835.7109145,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.601082745,83183.2229687,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.694985859,71943.9098688,5000.2363446,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.088375572,45940.0240931,5000.2363446,pool setup_s=3.19e-07 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.070969252,46686.6811597,5000.2363446,pool setup_s=2.54e-07 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.079634188,46311.982851,5000.2363446,pool setup_s=3.48e-07 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.251903754,39939.1725125,5000.2363446,pool setup_s=2.23e-07 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,full,1.167789661,42815.9296745,5000.2363446,pool setup_s=4.39e-07 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.782446909,63902.099203,5000.2363446,pool setup_s=3.4794e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.781290729,63996.6636543,5000.2363446,pool setup_s=4.6689e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.817013091,61198.5298042,5000.2363446,pool setup_s=7.1702e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.706765033,70744.8694622,5000.2363446,pool setup_s=4.9541e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,full,0.746923984,66941.2163367,5000.2363446,pool setup_s=4.3275e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.702674487,71156.7033172,5000.2363446,pool setup_s=7.338e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.665508844,75130.4816619,5000.2363446,pool setup_s=5.6259e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.628185702,79594.2980568,5000.2363446,pool setup_s=7.7347e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.583851256,85638.2503012,5000.2363446,pool setup_s=6.2482e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,full,0.684288537,73068.5921164,5000.2363446,pool setup_s=6.2401e-05 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.627374807,79697.1753442,5000.2363446,pool setup_s=0.000205412 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.599278952,83433.5993833,5000.2363446,pool setup_s=0.000213621 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.435248732,114876.842421,5000.2363446,pool setup_s=0.000232922 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.522446624,95703.5565034,5000.2363446,pool setup_s=0.000136055 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,full,0.592006433,84458.5416862,5000.2363446,pool setup_s=0.000173536 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.509774151,98082.6507227,5000.2363446,pool setup_s=0.000310924 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.484950809,103103.240725,5000.2363446,pool setup_s=0.000381516 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.479605981,104252.244511,5000.2363446,pool setup_s=0.000361823 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.453023964,110369.437322,5000.2363446,pool setup_s=0.000373255 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,full,0.493389671,101339.778554,5000.2363446,pool setup_s=0.000358944 extra_bytes=51456000
+C++,final,image,synthetic,infer,500,500,100,1,1,conv,0.696272326,71810.9827619,45.2029317461,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,conv,0.69783852,71649.8137707,45.2029317461,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,conv,0.694678077,71975.7851233,45.2029317461,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,conv,0.683249599,73179.6990048,45.2029317461,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,1,1,conv,0.650639406,76847.4819369,45.2029317461,create setup_s=0 extra_bytes=106912
+C++,final,image,synthetic,infer,500,500,100,2,1,conv,0.365163554,136924.946239,45.2029317461,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,conv,0.37169632,134518.415463,45.2029317461,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,conv,0.427303548,117012.836037,45.2029317461,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,conv,0.383447242,130396.03503,45.2029317461,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,2,1,conv,0.416854039,119946.061024,45.2029317461,create setup_s=0 extra_bytes=209824
+C++,final,image,synthetic,infer,500,500,100,4,1,conv,0.222248423,224973.47484,45.2029317461,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,conv,0.219141425,228163.159932,45.2029317461,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,conv,0.234849261,212902.522184,45.2029317461,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,conv,0.23173107,215767.354805,45.2029317461,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,4,1,conv,0.26656533,187571.279431,45.2029317461,create setup_s=0 extra_bytes=415648
+C++,final,image,synthetic,infer,500,500,100,8,1,conv,0.294044402,170042.34619,45.2029317461,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,conv,0.317319859,157569.715799,45.2029317461,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,conv,0.262456704,190507.612257,45.2029317461,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,conv,0.261659183,191088.267672,45.2029317461,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,8,1,conv,0.260552094,191900.204034,45.2029317461,create setup_s=0 extra_bytes=827296
+C++,final,image,synthetic,infer,500,500,100,16,1,conv,0.340815674,146706.867713,45.2029317461,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,conv,0.306884953,162927.505931,45.2029317461,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,conv,0.217011781,230402.237932,45.2029317461,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,conv,0.226139731,221102.235237,45.2029317461,create setup_s=0 extra_bytes=1650592
+C++,final,image,synthetic,infer,500,500,100,16,1,conv,0.202053864,247458.766738,45.2029317461,create setup_s=0 extra_bytes=1650592
+C++,final,rows,synthetic,infer,500,500,100,1,1,conv,0.734374139,68085.1862078,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,conv,0.718779507,69562.3616325,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,conv,0.772910145,64690.5727961,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,conv,0.728757631,68609.9162096,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,1,1,conv,0.699837037,71445.2041783,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,conv,0.399080739,125287.930771,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,conv,0.409964832,121961.68085,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,conv,0.397617803,125748.896611,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,conv,0.398622877,125431.837671,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,2,1,conv,0.382818102,130610.333573,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,conv,0.235164017,212617.56215,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,conv,0.223683868,223529.754055,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,conv,0.213200135,234521.427484,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,conv,0.249382449,200495.264204,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,4,1,conv,0.259088294,192984.403996,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,conv,0.282738184,176842.049746,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,conv,0.267268792,187077.584427,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,conv,0.256982538,194565.749055,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,conv,0.258018921,193784.238017,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,8,1,conv,0.246272716,203026.956506,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,conv,0.323864362,154385.619002,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,conv,0.36900674,135498.880048,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,conv,0.309877245,161354.216248,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,conv,0.329324476,151825.945667,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,rows,synthetic,infer,500,500,100,16,1,conv,0.311138285,160700.249408,45.2029317461,create setup_s=0 extra_bytes=51456000
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,2.93622935,10217.1855206,2977.0965255,create setup_s=0 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,2.944371533,10188.9315475,2977.0965255,create setup_s=0 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,2.977763964,10074.6736016,2977.0965255,create setup_s=0 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,2.89982233,10345.4614063,2977.0965255,create setup_s=0 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,3.190325808,9403.4283034,2977.0965255,create setup_s=0 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,3.19326603,9394.77003111,2977.0965255,create setup_s=0 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,3.280649904,9144.52955295,2977.0965255,create setup_s=0 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,3.483438975,8612.17900337,2977.0965255,create setup_s=0 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,3.156166712,9505.20132094,2977.0965255,create setup_s=0 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,3.605352334,8320.9620644,2977.0965255,create setup_s=0 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,4.2745579,7018.26965544,2977.0965255,create setup_s=0 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,4.389593323,6834.34609826,2977.0965255,create setup_s=0 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,4.523096399,6632.6245018,2977.0965255,create setup_s=0 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,4.829671662,6211.60238201,2977.0965255,create setup_s=0 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,4.550892597,6592.11338448,2977.0965255,create setup_s=0 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,6.347264541,4726.44551148,2977.0965255,create setup_s=0 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,6.518972482,4601.95223754,2977.0965255,create setup_s=0 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,6.682001159,4489.67297164,2977.0965255,create setup_s=0 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,6.370859538,4708.94073571,2977.0965255,create setup_s=0 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,6.926536153,4331.16919299,2977.0965255,create setup_s=0 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,11.945285146,2511.45114021,2977.0965255,create setup_s=0 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,11.599339683,2586.35412186,2977.0965255,create setup_s=0 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,11.432875801,2624.01171168,2977.0965255,create setup_s=0 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,11.599894549,2586.23040695,2977.0965255,create setup_s=0 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,11.33457099,2646.76978304,2977.0965255,create setup_s=0 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,0.513540208,58418.0158294,2977.0965255,pool setup_s=2.5e-08 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,0.517855015,57931.2725204,2977.0965255,pool setup_s=1.4e-08 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,0.529641162,56642.1232948,2977.0965255,pool setup_s=2.2e-08 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,0.538835286,55675.6411086,2977.0965255,pool setup_s=2.3e-08 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,1,1,full,0.536137191,55955.8271719,2977.0965255,pool setup_s=2.1e-08 extra_bytes=102920
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,1.276507864,23501.6178482,2977.0965255,pool setup_s=2.0398e-05 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,1.211217953,24768.4571763,2977.0965255,pool setup_s=2.0312e-05 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,1.257491862,23857.0132393,2977.0965255,pool setup_s=2.9374e-05 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,1.205791418,24879.9249623,2977.0965255,pool setup_s=4.7694e-05 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,2,1,full,1.335501131,22463.4777939,2977.0965255,pool setup_s=3.7366e-05 extra_bytes=205832
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,1.910957043,15698.9400206,2977.0965255,pool setup_s=7.0403e-05 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,2.043355323,14681.7343329,2977.0965255,pool setup_s=7.9972e-05 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,2.064748489,14529.6147012,2977.0965255,pool setup_s=5.7508e-05 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,1.820289701,16480.8931147,2977.0965255,pool setup_s=0.000172204 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,4,1,full,1.884953195,15915.5145494,2977.0965255,pool setup_s=4.5689e-05 extra_bytes=411656
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,2.882030632,10409.3272524,2977.0965255,pool setup_s=0.000116286 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,2.64508225,11341.8023201,2977.0965255,pool setup_s=0.000162939 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,2.831634884,10594.5862475,2977.0965255,pool setup_s=0.000122447 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,2.891726873,10374.4237674,2977.0965255,pool setup_s=0.000132769 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,8,1,full,2.799809772,10715.013677,2977.0965255,pool setup_s=0.000125105 extra_bytes=823304
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,5.01994195,5976.16472437,2977.0965255,pool setup_s=0.000267891 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,5.036189589,5956.88455922,2977.0965255,pool setup_s=0.000281788 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,5.283037218,5678.55170465,2977.0965255,pool setup_s=0.000330903 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,5.11054341,5870.2172339,2977.0965255,pool setup_s=0.000281305 extra_bytes=1646600
+C++,final,image,synthetic,infer,1,1,30000,16,1,full,5.189681531,5780.70153646,2977.0965255,pool setup_s=0.000320709 extra_bytes=1646600
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,2.928871942,10242.8513756,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,2.969796089,10101.7036527,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,3.025881325,9914.46682067,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,3.082051175,9733.77737636,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,2.999870743,10000.4308752,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,4.590466629,6535.28332185,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,4.363117399,6875.81773685,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,4.669151448,6425.15033708,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,4.515729681,6643.44460791,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,4.612859655,6503.55793233,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,7.780846012,3855.62186345,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,7.60085318,3946.92533714,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,7.782051563,3855.02457252,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,7.404061305,4051.83030829,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,7.213030828,4159.13930155,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,12.433718365,2412.79391404,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,12.458521784,2407.99033145,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,12.326693931,2433.74258888,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,12.34133165,2430.85599276,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,12.182504737,2462.54778042,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,19.336426882,1551.47588451,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,19.253083343,1558.19197713,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,19.518177644,1537.02874045,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,19.44105144,1543.12641436,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,19.453598534,1542.13113566,2977.0965255,create setup_s=0 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,0.55457025,54095.9418577,2977.0965255,pool setup_s=1.4e-08 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,0.560493056,53524.3027168,2977.0965255,pool setup_s=1.4e-08 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,0.551259052,54420.8750698,2977.0965255,pool setup_s=1.8e-08 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,0.550884092,54457.9167118,2977.0965255,pool setup_s=1.7e-08 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,1,1,full,0.592953563,50594.1811838,2977.0965255,pool setup_s=3e-08 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,1.152350265,26033.7511182,2977.0965255,pool setup_s=3.2179e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,1.272639515,23573.0539924,2977.0965255,pool setup_s=2.1596e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,1.171492924,25608.3492998,2977.0965255,pool setup_s=2.7756e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,1.439294959,20843.5385759,2977.0965255,pool setup_s=7.7579e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,2,1,full,1.024557261,29280.9403066,2977.0965255,pool setup_s=2.192e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,2.29616797,13065.2462677,2977.0965255,pool setup_s=4.5466e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,2.011276002,14915.9041177,2977.0965255,pool setup_s=5.0957e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,2.054220511,14604.0796688,2977.0965255,pool setup_s=8.3128e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,1.967121101,15250.7133317,2977.0965255,pool setup_s=0.000121447 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,4,1,full,2.127522498,14100.9084643,2977.0965255,pool setup_s=4.5096e-05 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,3.96805325,7560.3824117,2977.0965255,pool setup_s=0.000228634 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,4.208958077,7127.65474285,2977.0965255,pool setup_s=0.000228088 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,3.916023888,7660.83171554,2977.0965255,pool setup_s=0.000150843 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,4.165100527,7202.70730695,2977.0965255,pool setup_s=0.000129373 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,8,1,full,3.873654536,7744.62454542,2977.0965255,pool setup_s=0.000141024 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,7.762232207,3864.86763085,2977.0965255,pool setup_s=0.000314144 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,7.691910051,3900.20161457,2977.0965255,pool setup_s=0.000289157 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,7.677302893,3907.62230149,2977.0965255,pool setup_s=0.000292948 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,7.621855793,3936.04927917,2977.0965255,pool setup_s=0.000421324 extra_bytes=102912
+C++,final,rows,synthetic,infer,1,1,30000,16,1,full,7.799098904,3846.59822491,2977.0965255,pool setup_s=0.000440208 extra_bytes=102912
+C++,final,image,MNIST,train,10000,32,1,1,1,epoch_loop,0.594052508,16833.5288,0.751183125,create par=0.57881536 red=0.006506142 upd=0.008066374 extra_bytes=211792
+C++,final,image,MNIST,train,10000,32,1,1,1,epoch_loop,0.629227729,15892.4973,0.751183125,create par=0.609020964 red=0.007825404 upd=0.011496801 extra_bytes=211792
+C++,final,image,MNIST,train,10000,32,1,1,1,epoch_loop,0.631327373,15839.6427,0.751183125,create par=0.615930801 red=0.006759187 upd=0.007930252 extra_bytes=211792
+C++,final,image,MNIST,train,10000,32,1,1,1,epoch_loop,0.602834138,16588.3107,0.751183125,create par=0.589351256 red=0.005758013 upd=0.007079305 extra_bytes=211792
+C++,final,image,MNIST,train,10000,32,1,1,1,epoch_loop,0.61748796,16194.6477,0.751183125,create par=0.60129806 red=0.007024421 upd=0.008517829 extra_bytes=211792
+C++,final,image,MNIST,train,10000,32,1,2,1,epoch_loop,0.389472754,25675.737,0.751183125,create par=0.374919382 red=0.007120483 upd=0.006603575 extra_bytes=423584
+C++,final,image,MNIST,train,10000,32,1,2,1,epoch_loop,0.408951659,24452.7679,0.751183125,create par=0.391095782 red=0.009702549 upd=0.007311895 extra_bytes=423584
+C++,final,image,MNIST,train,10000,32,1,2,1,epoch_loop,0.38553196,25938.1868,0.751183125,create par=0.368181907 red=0.009234945 upd=0.00691424 extra_bytes=423584
+C++,final,image,MNIST,train,10000,32,1,2,1,epoch_loop,0.380836806,26257.9663,0.751183125,create par=0.366532178 red=0.007058012 upd=0.006409792 extra_bytes=423584
+C++,final,image,MNIST,train,10000,32,1,2,1,epoch_loop,0.400988807,24938.352,0.751183125,create par=0.382676482 red=0.010058886 upd=0.007281676 extra_bytes=423584
+C++,final,image,MNIST,train,10000,32,1,4,1,epoch_loop,0.30743644,32527.0485,0.751183125,create par=0.280945138 red=0.019257758 upd=0.006635195 extra_bytes=847168
+C++,final,image,MNIST,train,10000,32,1,4,1,epoch_loop,0.2893816,34556.4473,0.751183125,create par=0.265828636 red=0.015714573 upd=0.006524465 extra_bytes=847168
+C++,final,image,MNIST,train,10000,32,1,4,1,epoch_loop,0.312798653,31969.4471,0.751183125,create par=0.283506778 red=0.01971554 upd=0.008159611 extra_bytes=847168
+C++,final,image,MNIST,train,10000,32,1,4,1,epoch_loop,0.306206887,32657.6587,0.751183125,create par=0.279291036 red=0.018396698 upd=0.007167291 extra_bytes=847168
+C++,final,image,MNIST,train,10000,32,1,4,1,epoch_loop,0.31703036,31542.7204,0.751183125,create par=0.287879184 red=0.02044894 upd=0.007179947 extra_bytes=847168
+C++,final,image,MNIST,train,10000,32,1,8,1,epoch_loop,0.36648863,27285.9761,0.751183125,create par=0.316986263 red=0.040019665 upd=0.007068327 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,32,1,8,1,epoch_loop,0.383551369,26072.127,0.751183125,create par=0.331864872 red=0.042666809 upd=0.006886189 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,32,1,8,1,epoch_loop,0.375079507,26661.014,0.751183125,create par=0.321448077 red=0.043599066 upd=0.008459526 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,32,1,8,1,epoch_loop,0.346772098,28837.3836,0.751183125,create par=0.299867492 red=0.038405121 upd=0.006268197 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,32,1,8,1,epoch_loop,0.381875068,26186.5747,0.751183125,create par=0.326963046 red=0.045191684 upd=0.007369617 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,32,1,16,1,epoch_loop,0.443490566,22548.394,0.751183125,create par=0.338950805 red=0.086670689 upd=0.012698551 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,32,1,16,1,epoch_loop,0.460329837,21723.5538,0.751183125,create par=0.347619333 red=0.094234447 upd=0.014024109 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,32,1,16,1,epoch_loop,0.443326271,22556.7503,0.751183125,create par=0.339630509 red=0.085118554 upd=0.013939192 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,32,1,16,1,epoch_loop,0.43587007,22942.6168,0.751183125,create par=0.335306618 red=0.083804002 upd=0.012084196 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,32,1,16,1,epoch_loop,0.472975209,21142.7572,0.751183125,create par=0.369382861 red=0.087811673 upd=0.011766141 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,256,1,1,1,epoch_loop,0.541169675,18478.4929,2.18080677,create par=0.538982031 red=0.000997865 upd=0.000789983 extra_bytes=211792
+C++,final,image,MNIST,train,10000,256,1,1,1,epoch_loop,0.526526418,18992.3994,2.18080677,create par=0.524365085 red=0.000872754 upd=0.000982401 extra_bytes=211792
+C++,final,image,MNIST,train,10000,256,1,1,1,epoch_loop,0.530248107,18859.0961,2.18080677,create par=0.527829487 red=0.000908153 upd=0.000965509 extra_bytes=211792
+C++,final,image,MNIST,train,10000,256,1,1,1,epoch_loop,0.52713985,18970.2979,2.18080677,create par=0.524490316 red=0.000969042 upd=0.000782066 extra_bytes=211792
+C++,final,image,MNIST,train,10000,256,1,1,1,epoch_loop,0.524206447,19076.4537,2.18080677,create par=0.522136106 red=0.000832518 upd=0.000836599 extra_bytes=211792
+C++,final,image,MNIST,train,10000,256,1,2,1,epoch_loop,0.288747642,34632.3174,2.18080677,create par=0.285092404 red=0.001416584 upd=0.000873465 extra_bytes=423584
+C++,final,image,MNIST,train,10000,256,1,2,1,epoch_loop,0.321151552,31137.947,2.18080677,create par=0.317851658 red=0.001445532 upd=0.000851258 extra_bytes=423584
+C++,final,image,MNIST,train,10000,256,1,2,1,epoch_loop,0.329008481,30394.3533,2.18080677,create par=0.326019445 red=0.001222468 upd=0.000885257 extra_bytes=423584
+C++,final,image,MNIST,train,10000,256,1,2,1,epoch_loop,0.286616466,34889.8308,2.18080677,create par=0.284352361 red=0.001193089 upd=0.000807435 extra_bytes=423584
+C++,final,image,MNIST,train,10000,256,1,2,1,epoch_loop,0.301545583,33162.4821,2.18080677,create par=0.298632941 red=0.001287585 upd=0.000848363 extra_bytes=423584
+C++,final,image,MNIST,train,10000,256,1,4,1,epoch_loop,0.180044214,55541.9126,2.18080677,create par=0.174182356 red=0.003434871 upd=0.001095834 extra_bytes=847168
+C++,final,image,MNIST,train,10000,256,1,4,1,epoch_loop,0.198591139,50354.714,2.18080677,create par=0.193418477 red=0.003264368 upd=0.001106258 extra_bytes=847168
+C++,final,image,MNIST,train,10000,256,1,4,1,epoch_loop,0.195666819,51107.2856,2.18080677,create par=0.191964897 red=0.002378467 upd=0.000881568 extra_bytes=847168
+C++,final,image,MNIST,train,10000,256,1,4,1,epoch_loop,0.181575939,55073.3762,2.18080677,create par=0.17714664 red=0.002319033 upd=0.000863785 extra_bytes=847168
+C++,final,image,MNIST,train,10000,256,1,4,1,epoch_loop,0.192676219,51900.541,2.18080677,create par=0.187861106 red=0.002757369 upd=0.000854621 extra_bytes=847168
+C++,final,image,MNIST,train,10000,256,1,8,1,epoch_loop,0.171102087,58444.6407,2.18080677,create par=0.162483497 red=0.004747739 upd=0.000913191 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,256,1,8,1,epoch_loop,0.180967395,55258.573,2.18080677,create par=0.174191525 red=0.005132983 upd=0.000921726 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,256,1,8,1,epoch_loop,0.194998575,51282.426,2.18080677,create par=0.185310096 red=0.006355204 upd=0.001137939 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,256,1,8,1,epoch_loop,0.178059652,56160.9544,2.18080677,create par=0.171054772 red=0.004749506 upd=0.000813555 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,256,1,8,1,epoch_loop,0.198230332,50446.3666,2.18080677,create par=0.189605974 red=0.005533619 upd=0.00088272 extra_bytes=1694336
+C++,final,image,MNIST,train,10000,256,1,16,1,epoch_loop,0.160820051,62181.301,2.18080677,create par=0.145740788 red=0.008984517 upd=0.001945346 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,256,1,16,1,epoch_loop,0.173386458,57674.6311,2.18080677,create par=0.157563449 red=0.009232481 upd=0.002018145 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,256,1,16,1,epoch_loop,0.166620622,60016.5807,2.18080677,create par=0.150308857 red=0.009831838 upd=0.002090684 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,256,1,16,1,epoch_loop,0.168799563,59241.8595,2.18080677,create par=0.150574864 red=0.010956588 upd=0.001964245 extra_bytes=3388672
+C++,final,image,MNIST,train,10000,256,1,16,1,epoch_loop,0.167716009,59624.6003,2.18080677,create par=0.152467128 red=0.009616988 upd=0.001793206 extra_bytes=3388672
