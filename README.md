@@ -47,9 +47,10 @@ worth reading.
 
 `Lab-N/` holds the source for one lab together with a README describing what
 each program does. Lab 1 is built through a `Makefile` that writes to `Lab-N/bin/`;
-Lab 2 is a small set of programs compiled directly, plus the Python scripts that
-run its benchmarks and draw its plots. `docs/lab-N/` holds the finished report as
-a PDF. Compiled binaries and LaTeX sources are not tracked by git.
+Lab 2 and Lab 3 are small sets of programs compiled directly, plus the Python
+scripts that run their benchmarks and draw their plots; Lab 4 is a Jupyter
+notebook with its benchmark scripts beside it. `docs/lab-N/` holds the finished
+report as a PDF. Compiled binaries and LaTeX sources are not tracked by git.
 
 ## Topics covered
 
@@ -69,9 +70,19 @@ results, and finally measuring what all of that actually bought. It also covers
 false sharing, where variables that are private to each thread still slow each
 other down because they share a cache line.
 
+Labs 3 and 4 push the same questions further. Lab 3 implements one network under
+two different decompositions of the same computation, and spends a whole part of
+the lab proving that the parallel versions still compute what the sequential one
+computed. Lab 4 moves up a level of abstraction to a numerical library, where the
+threads a program creates itself are no longer the only ones running, and the
+distinction between explicit task parallelism and the parallelism inside a
+library kernel becomes the thing being measured.
+
 Examples are written primarily in C++, using C++20 where a newer facility such as
 `std::barrier` is needed. Several have a Java counterpart kept alongside the C++
-version so that the two threading models can be compared directly.
+version so that the two threading models can be compared directly. Lab 4 is the
+exception and uses Python with PyTorch, because its subject is what happens when
+the numerical work is handed to a threaded native library.
 
 ## Requirements
 
@@ -79,11 +90,20 @@ A C++20 compiler is required; g++ 11 or newer is recommended, since both Lab 1's
 Example 8 and Lab 2's worker pool use `std::barrier`. Lab 1's Example 10 links
 against libcurl. Python 3 with matplotlib is needed for the plotting and benchmark
 scripts, and Lab 2 downloads the MNIST dataset once before its first run. The Java
-versions require a JDK 11 or newer and are optional.
+versions require a JDK 11 or newer and are optional. Lab 3 needs only C++17, and
+downloads MNIST once in the same way.
 
 On Debian or Ubuntu:
 
     sudo apt install build-essential libcurl4-openssl-dev default-jdk python3-matplotlib
+
+Lab 4 additionally needs PyTorch, which the distribution does not package. A
+CPU-only build in a virtual environment is enough, since the lab is about
+multicore CPUs rather than GPUs:
+
+    python3 -m venv venv
+    ./venv/bin/pip install --index-url https://download.pytorch.org/whl/cpu torch
+    ./venv/bin/pip install matplotlib jupyter
 
 ## Building and running
 
@@ -108,6 +128,23 @@ same way, and the dataset is fetched once before the first run:
     g++ -O2 -std=c++20 -pthread nn_multithreaded_IJ.cpp -o nn_IJ
     ./nn_IJ ../data --threads 4 --mode create
 
+Lab 3 follows the same pattern, one self-contained file per version, with the
+sequential reference carrying its own correctness checks:
+
+    cd Lab-3
+    python3 fetch_mnist.py
+    g++ -O2 -std=c++17 -pthread cnn_sequential.cpp -o cnn_seq
+    ./cnn_seq --self-test
+    ./cnn_seq --gradcheck
+    g++ -O2 -std=c++17 -pthread validate_D.cpp -o validate_D && ./validate_D
+
+Lab 4 is a notebook, and its benchmarks also run as plain scripts:
+
+    cd Lab-4
+    ./venv/bin/jupyter notebook PC40_Lab04_Transformer_HPC_v5.ipynb
+    ./venv/bin/python bench_lab4.py --trials 7
+    ./venv/bin/python ceiling_lab4.py
+
 ## Labs
 
 **Lab 1: thread fundamentals, synchronisation and process-based parallelism.**
@@ -128,15 +165,54 @@ times the sequential time, and the report spends more space on why it is not 16
 than on the number itself. Source in [`Lab-2/`](Lab-2/), report in
 [`docs/lab-2/`](docs/lab-2/).
 
+**Lab 3: a convolutional network, two decompositions, and proving the parallel
+version still computes the same thing.** The network is small on purpose — a
+28×28 image, one 3×3 convolution with eight filters, ReLU, 2×2 max pooling, a
+dense layer of ten outputs, 13,610 parameters — so that every intermediate value
+can be checked against a hand computation. The same forward pass is then
+decomposed in two different ways: either one worker owns whole images and runs
+every layer for them, or one worker owns rows of batch-wide buffers and the
+layers are separated by barriers. Training adds a problem the forward pass does
+not have, because the gradient of a convolution is a sum over every spatial
+position and every image, so each worker accumulates into a private copy and a
+single thread reduces them before one update is applied. An entire part of the
+lab is given to correctness rather than speed: 104 comparisons against the
+sequential reference with no failures, the forward pass bit-identical and the
+gradients within 3.8 × 10⁻¹⁵. The scaling study reaches 2.86 times on inference
+and 2.55 on training, and the report is mostly about which costs grow with the
+thread count. Written in C++17. Source in [`Lab-3/`](Lab-3/), report in
+[`docs/lab-3/`](docs/lab-3/).
+
+**Lab 4: Transformer self-attention on a multicore CPU.** The application becomes
+the attention block of a Transformer and the language becomes Python with
+PyTorch, but the question does not change. Scaled dot-product attention is
+written out from elementary tensor operations and checked against the library's
+own kernel, then parallelised twice: explicitly, with one thread-pool task per
+attention head, and implicitly, by letting the library's internal threads split a
+single batched expression. The two are kept on separate baselines, since they are
+different algorithms and dividing one by the other would measure a change of
+implementation as well as a change of thread count. The explicit version scales
+badly, and most of the report is about establishing why by measurement rather
+than assertion: the same thread pool reaches an efficiency of 0.94 on a
+homogeneous set of cores, so neither the pool nor the interpreter lock is the
+barrier; this machine's cores are not equal to one another, and a join waits for
+the slowest; and a per-head task is both small and scarce, since there are only
+as many as there are heads. A memory-bandwidth explanation was tested and
+rejected, and is reported as rejected. Source in [`Lab-4/`](Lab-4/), report in
+[`docs/lab-4/`](docs/lab-4/).
+
 ## Reports
 
 The report for each lab is kept under [`docs/`](docs/) as a PDF. Each report states the machine and compiler it was measured
 on, since all timing results are specific to the hardware that produced them, and
 Lab 2's report also records which measurement session each table came from,
 because the baseline of a laptop drifts between sessions and a speedup built from
-two different sessions measures nothing. Reading a report alongside the
-corresponding source directory should give a complete picture of what was done
-and what was observed.
+two different sessions measures nothing. Labs 3 and 4 are written as two-page
+syntheses rather than long reports, which is what those labs asked for, so the
+supporting measurements that did not fit live in the benchmark scripts and their
+recorded output next to the source. Reading a report alongside the corresponding
+source directory should give a complete picture of what was done and what was
+observed.
 
 ## Elsewhere
 
