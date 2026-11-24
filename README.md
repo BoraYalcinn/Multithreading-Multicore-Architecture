@@ -48,9 +48,9 @@ worth reading.
 `Lab-N/` holds the source for one lab together with a README describing what
 each program does. Lab 1 is built through a `Makefile` that writes to `Lab-N/bin/`;
 Lab 2 and Lab 3 are small sets of programs compiled directly, plus the Python
-scripts that run their benchmarks and draw their plots; Lab 4 is a Jupyter
-notebook with its benchmark scripts beside it. `docs/lab-N/` holds the finished
-report as a PDF. Compiled binaries and LaTeX sources are not tracked by git.
+scripts that run their benchmarks and draw their plots; Labs 4 and 5 are Jupyter
+notebooks with their benchmark scripts beside them. `docs/lab-N/` holds the
+finished report as a PDF. Compiled binaries and LaTeX sources are not tracked by git.
 
 ## Topics covered
 
@@ -78,11 +78,16 @@ threads a program creates itself are no longer the only ones running, and the
 distinction between explicit task parallelism and the parallelism inside a
 library kernel becomes the thing being measured.
 
+Lab 5 asks the same question of a library that behaves in the opposite way, and
+is the clearest demonstration in the repository that a thread is not always a
+core: the same decomposition that worked in Lab 4 runs six times slower there,
+because scikit-learn holds the interpreter lock where PyTorch released it.
+
 Examples are written primarily in C++, using C++20 where a newer facility such as
 `std::barrier` is needed. Several have a Java counterpart kept alongside the C++
-version so that the two threading models can be compared directly. Lab 4 is the
-exception and uses Python with PyTorch, because its subject is what happens when
-the numerical work is handed to a threaded native library.
+version so that the two threading models can be compared directly. Labs 4 and 5
+are the exceptions and use Python, because their subject is what happens when the
+numerical work is handed to a threaded native library.
 
 ## Requirements
 
@@ -104,6 +109,10 @@ multicore CPUs rather than GPUs:
     python3 -m venv venv
     ./venv/bin/pip install --index-url https://download.pytorch.org/whl/cpu torch
     ./venv/bin/pip install matplotlib jupyter
+
+Lab 5 needs scikit-learn, and xgboost for its optional second extension:
+
+    ./venv/bin/pip install scikit-learn matplotlib jupyter xgboost
 
 ## Building and running
 
@@ -144,6 +153,13 @@ Lab 4 is a notebook, and its benchmarks also run as plain scripts:
     ./venv/bin/jupyter notebook PC40_Lab04_Transformer_HPC_v5.ipynb
     ./venv/bin/python bench_lab4.py --trials 7
     ./venv/bin/python ceiling_lab4.py
+
+Lab 5 is the same shape:
+
+    cd Lab-5
+    ./venv/bin/jupyter notebook PC40_Lab05_NestedCV.ipynb
+    ./venv/bin/python bench_lab5.py --trials 5
+    ./venv/bin/python plot_lab5.py
 
 ## Labs
 
@@ -201,13 +217,33 @@ as many as there are heads. A memory-bandwidth explanation was tested and
 rejected, and is reported as rejected. Source in [`Lab-4/`](Lab-4/), report in
 [`docs/lab-4/`](docs/lab-4/).
 
+**Lab 5: nested cross-validation, and a thread pool that does not help.** The
+application is model validation rather than a model: an outer leave-one-out
+loop over 25 observations estimates generalisation, and inside each of its
+iterations a 5-fold loop picks hyperparameters from a 36-point grid, which comes
+to 4,525 model fits. `GridSearchCV` and `n_jobs=-1` are not used, so that the
+structure is visible before anything is parallelised. There are three places to
+cut the work — one task per outer fold, per hyperparameter configuration, or per
+inner fold — and all three are implemented and shown to reproduce the sequential
+predictions exactly, which is only possible because nothing in the algorithm is
+allowed to depend on execution order. The interesting result is negative: a
+thread pool is six times *slower* than running sequentially, and the ratio of
+process CPU time to wall time stays at 1.05 however many workers are configured,
+so the workers are taking turns rather than running. Handing the same pool a
+numpy matrix multiply reaches 6.66 cores busy, which rules out the pool and the
+measurement and leaves scikit-learn holding the interpreter lock; separate
+processes then reach 5.66 times the sequential speed. The second limit is
+granularity — the same work cut into 4,500 tasks instead of 25 is three times
+slower than not parallelising at all. Source in [`Lab-5/`](Lab-5/), report in
+[`docs/lab-5/`](docs/lab-5/).
+
 ## Reports
 
 The report for each lab is kept under [`docs/`](docs/) as a PDF. Each report states the machine and compiler it was measured
 on, since all timing results are specific to the hardware that produced them, and
 Lab 2's report also records which measurement session each table came from,
 because the baseline of a laptop drifts between sessions and a speedup built from
-two different sessions measures nothing. Labs 3 and 4 are written as two-page
+two different sessions measures nothing. Labs 3 to 5 are written as two-page
 syntheses rather than long reports, which is what those labs asked for, so the
 supporting measurements that did not fit live in the benchmark scripts and their
 recorded output next to the source. Reading a report alongside the corresponding
