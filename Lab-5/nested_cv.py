@@ -24,6 +24,16 @@ from __future__ import annotations
 import functools
 import itertools
 import os
+
+# Pin the native thread pools BEFORE numpy and scikit-learn are imported: these
+# variables are only read when the library initialises, so setting them later
+# has no effect.  Without this, BLAS starts one thread per core inside every
+# task and the explicit parallelism being measured is buried under threads
+# nobody asked for.
+for _var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+             "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
+    os.environ.setdefault(_var, "1")
+
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 
 import numpy as np
@@ -72,10 +82,19 @@ def build_grid(param_grid=None):
 
 
 def make_model(params, kind: str = "tree"):
+    """The three estimators the lab asks for, all with a fixed random_state.
+
+    XGBoost is given n_jobs=1 on purpose: the lab wants the explicit task
+    parallelism measured, and a library that starts its own threads inside each
+    task would oversubscribe the machine and make the speedup curve unreadable.
+    """
     if kind == "tree":
         return DecisionTreeRegressor(random_state=SEED, **params)
     if kind == "boosting":
         return GradientBoostingRegressor(random_state=SEED, **params)
+    if kind == "xgb":
+        from xgboost import XGBRegressor                   # optional dependency
+        return XGBRegressor(random_state=SEED, n_jobs=1, verbosity=0, **params)
     raise ValueError(f"unknown model kind: {kind}")
 
 
@@ -84,6 +103,8 @@ BOOSTING_GRID = {
     "learning_rate": [0.05, 0.1],
     "max_depth": [2, 3],
 }
+
+XGB_GRID = dict(BOOSTING_GRID)
 
 
 # --------------------------------------------------------------------------
@@ -266,19 +287,15 @@ def final_model_selection(X, y, grid=None, kind="tree", n_splits=5):
 # --------------------------------------------------------------------------
 # thread settings
 # --------------------------------------------------------------------------
-def pin_native_threads():
-    """Keep the numerical libraries single-threaded.
+def native_thread_settings():
+    """What the native thread pools were actually limited to, for the record.
 
-    The parallelism being measured is the explicit task parallelism of this
-    file.  If BLAS or OpenMP also start threads, p workers become far more than
-    p runnable threads and the speedup curve stops meaning anything.  These
-    variables are only read when the library is first imported, so this has to
-    run before numpy and sklearn are loaded to take full effect; it is called
-    from the scripts, at the top.
+    The limits themselves are applied at the top of this module, before numpy
+    is imported, because that is the only moment at which they are read.
     """
-    for var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
-                "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
-        os.environ.setdefault(var, "1")
+    return {var: os.environ.get(var) for var in
+            ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+             "NUMEXPR_NUM_THREADS", "VECLIB_MAXIMUM_THREADS")}
 
 
 def make_pool(kind: str, workers: int):
